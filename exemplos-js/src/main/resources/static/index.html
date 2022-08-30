@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Exemplos Javascript</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <article>
+            <h1>Exemplos Javascript</h1>
+            <p>Nome: <span id="nome">Fulano da Silva</span></p>
+            <p>Data de nascimento: <span id="dataNascimento">01/01/2000</span></p>
+            <ul id="conhecimentos">
+                <li>Javascript</li>
+                <li>SQL</li>
+                <li>Spring</li>
+            </ul>
+        </article>
+        <script>
+/*
+            // ==== DIFERENCAS var E let
+            var variavelVar = 10;
+            let variavelLet = 10;
+            const variavelConst = 3.1415;
+            
+            for (let i = 11; i < 15; i++) {
+                var variavelVar = i;
+                let variavelLet = i;
+                // alert ('Alert 1: \nvariavelVar: ' + variavelVar + '\n' + 'variavelLet: ' + variavelLet)
+            }
+
+            // alert ('Alert 2: \nvariavelVar: ' + variavelVar + '\n' + 'variavelLet: ' + variavelLet)
+            
+            
+            // ===== COMPARADORES DE IGUALDADE
+            
+            let var1 = 3;
+            let var2 = 4;
+            let var3 = '3';
+            
+            // alert('Comparacao var1 == var2: ' + (var1 == var2));
+            // alert('Comparacao var1 == var3: ' + (var1 == var3));
+            // alert('Comparacao var1 === var3: ' + (var1 === var3));
+            // alert('Comparacao var1 != var3: ' + (var1 != var3));
+            // alert('Comparacao var1 !== var3: ' + (var1 !== var3));
+            
+            
+            
+            // ===== DECLARACAO DE FUNÇÕES
+            
+            function somar1(op1, op2) {
+                return op1 + op2;
+            }
+            
+            const somar2 = function(op1, op2) {
+                return op1 + op2;
+            }
+            
+            // Arrow function
+            const somar3 = (op1, op2) => {
+                return op1 + op2;
+            }
+            
+            // Arrow function com return implicito
+            const somar4 = (op1, op2) => op1 + op2;
+            
+            alert('Somar1 de 3 + 7 = ' + somar1(3, 7));
+            alert('Somar2 de 3 + 7 = ' + somar2(3, 7));
+            alert('Somar4 de 3 + 7 = ' + somar4(3, 7));
+*/
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'dados.json');
+            xhr.onload = function() {
+                if (xhr.status >= 200 && xhr.status < 400) {
+                    let dados = JSON.parse(xhr.responseText);
+                    document.getElementById('nome').innerHTML =  dados.nome;
+                    document.getElementById('dataNascimento').innerHTML = dados.dataNascimento;
+                    document.getElementById('conhecimentos').innerHTML = '';
+                    for (const conhecimento of dados.conhecimentos) {
+                        document.getElementById('conhecimentos').insertAdjacentHTML('beforeend', '<li>' + conhecimento + '</li>')
+                    }
+                }
+            };
+            xhr.send();
+        </script>
+    </body>
+</html>
+ 

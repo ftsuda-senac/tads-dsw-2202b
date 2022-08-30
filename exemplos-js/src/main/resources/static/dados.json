@@ -1,0 +1,10 @@
+{
+    "nome": "Darth Vader",
+    "dataNascimento": "1971-05-04",
+    "conhecimentos": [
+        "lightsaber",
+        "force",
+        "dark side",
+        "robótica"
+    ]
+}

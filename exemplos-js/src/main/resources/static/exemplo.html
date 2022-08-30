@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Exemplo</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .estilo1 {
+                color: red;
+                background-color: yellow;
+            }
+        </style>
+        <script>
+            function carregarDados() {
+                // let elConteudo = document.getElementById('conteudo');
+                let elConteudo = document.querySelector('#conteudo');
+                elConteudo.classList.add('estilo1');
+                elConteudo.onclick = function(evt) {
+                    alert('Elemento clicado');
+                }
+                elConteudo.innerHTML = '<h1>Teste</h1><h2>Conteúdo criado via JS</h2>';
+
+                let elH1 = document.querySelector('h1');
+                elH1.style.backgroundColor = 'green';
+            }
+            document.addEventListener('DOMContentLoaded', carregarDados);
+        </script>
+    </head>
+    <body>
+        <div id="conteudo"></div>
+    </body>
+</html>
