@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Exemplos Javascript</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <article>
+            <h1>Exemplos Javascript</h1>
+            <p>Nome: <span id="nome">Fulano da Silva</span></p>
+            <p>Data de nascimento: <span id="dataNascimento">01/01/2000</span></p>
+            <ul id="conhecimentos">
+                <li>Javascript</li>
+                <li>SQL</li>
+                <li>Spring</li>
+            </ul>
+            <div id="exp-prof"></div>
+            <div id="exp-prof2"></div>
+        </article>
+        <script>
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'base.json');
+            xhr.onload = function() {
+                if (xhr.status >= 200 && xhr.status < 400) {
+                    let dados = JSON.parse(xhr.responseText);
+                    document.getElementById('nome').innerHTML =  dados.nome;
+                    document.getElementById('dataNascimento').innerHTML = dados.dataNascimento;
+                    document.getElementById('conhecimentos').innerHTML = '';
+                    for (const conhecimento of dados.conhecimentos) {
+                        document.getElementById('conhecimentos').insertAdjacentHTML('beforeend', '<li>' + conhecimento + '</li>')
+                    }
+                    if (dados.experienciasProfissionais.length >= 2 
+                            && dados.experienciasProfissionais[1] !== null) {
+                    document.getElementById("exp-prof").innerHTML = dados.experienciasProfissionais[1].empresa 
+                        + "<br>" 
+                        + dados.experienciasProfissionais[1].cargo;
+                    }
+                    // Percorrendo todas as experienciasProfissionais
+                    if (dados.experienciasProfissionais.length >= 0) {
+                        for (const dadoExpProf of dados.experienciasProfissionais) {
+                            document.getElementById('exp-prof2').insertAdjacentHTML('beforeend', '<p>' + dadoExpProf.empresa + '<br>' + dadoExpProf.cargo + '</p>')
+                        }
+                    }
+                    
+                }
+            };
+            xhr.send();
+        </script>
+    </body>
+</html>
+ 

@@ -1,0 +1,17 @@
+[
+    {
+        "nome": "Fulano da Silva",
+        "email": "fulano@teste.com.br",
+        "telefone": "(11) 99999-1234"
+    },
+    {
+        "nome": "Ciclano de Souza",
+        "email": "ciclano@teste.com.br",
+        "telefone": "(11) 99999-2233"
+    },
+    {
+        "nome": "Beltrana dos Santos",
+        "email": "beltrana@teste.com.br",
+        "telefone": "(11) 99999-4455"
+    }
+]

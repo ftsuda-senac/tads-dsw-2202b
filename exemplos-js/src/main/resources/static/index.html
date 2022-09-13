@@ -69,13 +69,13 @@
             alert('Somar4 de 3 + 7 = ' + somar4(3, 7));
 */
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', 'dados.json');
+            xhr.open('GET', 'exemplo-json/v2');
             xhr.onload = function() {
                 if (xhr.status >= 200 && xhr.status < 400) {
                     let dados = JSON.parse(xhr.responseText);
-                    document.getElementById('nome').innerHTML =  dados.nome;
-                    document.getElementById('dataNascimento').innerHTML = dados.dataNascimento;
-                    document.getElementById('conhecimentos').innerHTML = '';
+                    document.getElementById('nome').innerHTML =  dados.profile.name;
+                    //document.getElementById('dataNascimento').innerHTML = dados.dataNascimento;
+                    //document.getElementById('conhecimentos').innerHTML = '';
                     for (const conhecimento of dados.conhecimentos) {
                         document.getElementById('conhecimentos').insertAdjacentHTML('beforeend', '<li>' + conhecimento + '</li>')
                     }

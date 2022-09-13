@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Exemplo JS2</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .item {
+                border: 8px dashed #ccc;
+                padding: 10px;
+                margin: 10px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <article>
+            <h1>Exemplo JS 2 - Carregar item complexo</h1>
+            <div id="conteudo">
+               
+            </div>
+            <button id="btncarregar">Carregar dados</button>
+        </article>
+        <script>
+            
+            function adicionarItem1(nome, email, telefone) {
+                 document.getElementById('conteudo').innerHTML =
+                         '<section class="item">' +
+                         '<h2>Nome: ' + nome + '</h2>' +
+                         '<p>E-mail: ' + email + '</p>' +
+                         '<p>Telefone: ' + telefone + '</p>' +
+                         '</section>';
+            }
+            
+            //document.getElementById('btncarregar').onclick = function() { /*...*/ };
+            document.getElementById('btncarregar').addEventListener('click', function() {
+                let dados = {
+                    nome: 'Fulano da Silva',
+                    email: 'fulano@teste.com.br',
+                    telefone: '(11) 98888-1234'
+                }
+                adicionarItem1(dados.nome, dados.email, dados.telefone);
+            });
+        </script>
+    </body>
+</html>

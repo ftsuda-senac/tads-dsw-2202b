@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Exemplo 1</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <article>
+            <h1>Exemplo 1 - Carregar 1000 itens ao clicar no botão</h1>
+            
+            <!-- beforebegin -->
+            <ul id="conteudo">
+                <!-- afterbegin -->
+                
+                <!-- beforeend -->
+            </ul>
+            <!-- afterend -->
+            
+            <button id="btncarregar">Carregar itens</button>
+        </article>
+        <script>
+            
+            function adicionar(i) {
+                document.getElementById('conteudo').insertAdjacentHTML('afterbegin', 
+                '<li>Item ' + i + '</li>');
+            }
+            
+            document.getElementById('btncarregar').onclick = function() {
+                for (let i = 0; i < 1000; i++) {
+                    adicionar(i);
+                }
+            }
+        </script>
+    </body>
+</html>

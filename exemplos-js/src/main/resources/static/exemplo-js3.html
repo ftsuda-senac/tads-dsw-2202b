@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Exemplo JS3</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .item {
+                border: 8px dashed #ccc;
+                padding: 10px;
+                margin: 10px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <article>
+            <h1>Exemplo JS 3 - Carregar item complexo via AJAX</h1>
+            <div id="conteudo">
+               
+            </div>
+            <button id="btncarregar">Carregar dados</button>
+        </article>
+        <script>
+            
+            function adicionarItem1(nome, email, telefone) {
+                 document.getElementById('conteudo').insertAdjacentHTML('beforeend',
+                         '<section class="item">' +
+                         '<h2>Nome: ' + nome + '</h2>' +
+                         '<p>E-mail: ' + email + '</p>' +
+                         '<p>Telefone: ' + telefone + '</p>' +
+                         '</section>');
+            }
+            
+            //document.getElementById('btncarregar').onclick = function() { /*...*/ };
+            document.getElementById('btncarregar').addEventListener('click', function() {
+                
+                const xhr = new XMLHttpRequest();
+                
+                xhr.open('GET', 'info-ex3b.json');
+                
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        const dadosArray = JSON.parse(xhr.responseText);
+                        for (let i = 0; i < dadosArray.length; i++) {
+                            const dados = dadosArray[i];
+                            adicionarItem1(dados.nome, dados.email, dados.telefone);
+                        }
+                    }
+                };
+                
+                xhr.send();
+
+            });
+        </script>
+    </body>
+</html>

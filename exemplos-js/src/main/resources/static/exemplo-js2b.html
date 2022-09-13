@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Exemplo JS2</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .item {
+                border: 8px dashed #ccc;
+                padding: 10px;
+                margin: 10px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <article>
+            <h1>Exemplo JS 2 - Carregar item complexo - Array de itens</h1>
+            <div id="conteudo">
+               
+            </div>
+            <button id="btncarregar">Carregar dados</button>
+        </article>
+        <script>
+            
+            function adicionarItem1(nome, email, telefone) {
+                 document.getElementById('conteudo').insertAdjacentHTML('beforeend',
+                         '<section class="item">' +
+                         '<h2>Nome: ' + nome + '</h2>' +
+                         '<p>E-mail: ' + email + '</p>' +
+                         '<p>Telefone: ' + telefone + '</p>' +
+                         '</section>');
+            }
+            
+            //document.getElementById('btncarregar').onclick = function() { /*...*/ };
+            document.getElementById('btncarregar').addEventListener('click', function() {
+                let dadosArray = [
+                    {
+                        nome: 'Fulano da Silva',
+                        email: 'fulano@teste.com.br',
+                        telefone: '(11) 98888-1234'
+                    },
+                    {
+                        nome: 'Ciclano de Souza',
+                        email: 'ciclano@teste.com.br',
+                        telefone: '(11) 98888-2233'
+                    },
+                    {
+                        nome: 'Beltrana dos Santos',
+                        email: 'beltrana@teste.com.br',
+                        telefone: '(11) 98888-7766'
+                    },
+                    {
+                        nome: 'Seu Madruga',
+                        email: 'madruga@teste.com.br',
+                        telefone: '(11) 99999-1234'
+                    }
+                ];
+                
+                for (let i = 0; i < dadosArray.length; i++) {
+                    const dados = dadosArray[i];
+                    adicionarItem1(dados.nome, dados.email, dados.telefone);
+                }
+               
+            });
+        </script>
+    </body>
+</html>
