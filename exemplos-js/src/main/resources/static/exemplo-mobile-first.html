@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                background-color: red;
+            }
+            #mobile {
+                display: block;
+            }
+            #desktop {
+                display: none;
+            }
+            @media screen and (min-width: 700px) and (max-width: 1500px) {
+                body {
+                    background-color: yellow;
+                }
+                #mobile {
+                    display: none;
+                }
+                #desktop {
+                    display: block;
+                }
+            }
+            @media screen and (min-width: 1501px) {
+                body {
+                    background-color: green;
+                }
+                #mobile {
+                    display:none;
+                }
+                #desktop {
+                    display: block;
+                }
+            }
+
+
+        </style>
+    </head>
+    <body>
+        <div id="mobile">
+            <h2>Título mobile</h2>
+        </div>
+        <div id="desktop">
+            <h2>Título desktop</h2>
+        </div>
+        <div>
+            <p>Texto texto</p>
+            <code>Para ver exemplo funcionar, ir em "Change View" > "Full Page View" e redimensionar a largura da janela</code>
+        </div>
+    </body>
+</html>
