@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Exemplos Spring MVC</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .item {
+                border: 5px dashed #ddd;
+                margin: 10px 20px;
+                padding: 20px 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <h1>Exemplos Thymeleaf</h1>
+            <section th:each="item : ${listaDados}" class="item">
+                <h2 th:text="${item.titulo}">Titulo</h2>
+                <p>Número: <span th:text="${item.numero}">123</span>
+                    <span th:if="${item.isPar() == true}">Número par</span>
+                    <span th:if="${item.isPar() == false}">Número ímpar</span>
+                </p>
+                <p>Código: <span th:text="${item.codigo}">abcd</span></p>
+            </section>
+        </div>
+    </body>
+</html>

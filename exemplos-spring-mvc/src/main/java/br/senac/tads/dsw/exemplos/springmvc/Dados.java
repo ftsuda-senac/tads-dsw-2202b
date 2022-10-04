@@ -30,7 +30,7 @@ public class Dados {
     }
 
     public String getTitulo() {
-        return "Pegadinha do Malandro";
+        return titulo;
     }
 
     public void setTitulo(String titulo) {
@@ -59,6 +59,19 @@ public class Dados {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+    
+    public boolean isPar() {
+        return (this.numero % 2 == 0);
+        
+//        int mod = this.numero % 2;
+//        return (mod == 0);
+        
+//        if (mod == 0) {
+//            return true;
+//        } else {
+//            return false;
+//        }
     }
     
 }

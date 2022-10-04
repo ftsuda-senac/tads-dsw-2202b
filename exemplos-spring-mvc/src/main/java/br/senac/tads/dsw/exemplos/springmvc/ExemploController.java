@@ -1,9 +1,14 @@
 package br.senac.tads.dsw.exemplos.springmvc;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -97,5 +102,112 @@ public class ExemploController {
         mv.addObject("dados", d);
         return mv;
     }
+    
+    @GetMapping("/ex04b")
+    public ModelAndView ex04b() {
+        LocalDateTime dataHoraAtual = LocalDateTime.now();
+        
+        Dados d1 = new Dados("Item 1", 12, dataHoraAtual, "cod111");
+        Dados d2 = new Dados("Item 2 XXXXXX", 39, dataHoraAtual, "cod23123");
+        Dados d3 = new Dados("Item XPTO", 59, dataHoraAtual, "cod12121");
+        
+        List<Dados> listaDados = new ArrayList<>();
+        listaDados.add(d1);
+        listaDados.add(d2);
+        listaDados.add(d3);
+        // Adicionando 4o item
+        listaDados.add(new Dados("Item 4", 88, dataHoraAtual, "codigo4444"));
+        
+        ModelAndView mv = new ModelAndView("exemplo04b");
+        mv.addObject("listaDados", listaDados);
+        return mv;
+    }
+    
+    @GetMapping("/ex05/{apelido}")
+    public ModelAndView ex05(@PathVariable String apelido,
+            @RequestParam(defaultValue = "0") int numero,
+            @RequestParam(required = false) String codigo) {
+        
+        String titulo = "Apelido não encontrado";
+        if ("fulano".equalsIgnoreCase(apelido)) {
+            titulo = "Página do Fulano da Silva";
+        } else if ("ciclano".equalsIgnoreCase(apelido)) {
+            titulo = "Página do Ciclano de Souza";
+        } else if ("beltrana".equalsIgnoreCase(apelido)) {
+            titulo = "Página da Beltrana dos Santos";
+        }
+        
+        LocalDateTime dataHoraAtual = LocalDateTime.now();
+        ModelAndView mv = new ModelAndView("exemplo05");
+        Dados d = new Dados(titulo, numero, dataHoraAtual, codigo);
+        mv.addObject(d);
+        return mv;
+    }
+    
+    @GetMapping("/ex-exibicao-dinamica-v1")
+    public ModelAndView exExibicaoDinamica(@RequestHeader("user-agent") String userAgent) {
+        String mensagem = "Acesso via dispositivo movel (Versão Spring MVC)";
+        String backgrondColor = "#2ecc71"; //Verde
+        if (!userAgent.toLowerCase().contains("mobile")) {
+            mensagem = "Acesso via desktop (Versão Spring MVC)";
+            backgrondColor = "#9b59b6"; // Roxo
+        }
+        ModelAndView mv = new ModelAndView("ex-exibicao-dinamica-v1");
+        mv.addObject("backgroundColor", backgrondColor);
+        mv.addObject("mensagem", mensagem);
+        mv.addObject("userAgent", userAgent);
+        return mv;
+    }
+    
+    @GetMapping("/ex-exibicao-dinamica-v2")
+    public ModelAndView exExibicaoDinamicaV2(@RequestHeader("user-agent") String userAgent) {
+        String template = "ex-exibicao-dinamica-mobile";
+        if (!userAgent.toLowerCase().contains("mobile")) {
+            template = "ex-exibicao-dinamica-desktop";
+        }
+        ModelAndView mv = new ModelAndView(template);
+        mv.addObject("userAgent", userAgent);
+        return mv;
+    }
+    
+    @GetMapping("/ex-sites-separados/desktop")
+    public ModelAndView exSitesSeparadosDesktop(
+            @RequestHeader("user-agent") String userAgent) {
+        if (userAgent.toLowerCase().contains("mobile")) {
+            ModelAndView mv = new ModelAndView(
+                    "redirect:/exemplos/ex-sites-separados/mobile");
+            return mv;
+        }
+        ModelAndView mv = new ModelAndView("ex-sites-separados-desktop");
+        mv.addObject("userAgent", userAgent);
+        return mv;
+    }
+    
+    @GetMapping("/ex-sites-separados/mobile")
+    public ModelAndView exSitesSeparadosMobile(
+            @RequestHeader("user-agent") String userAgent) {
+        if (!userAgent.toLowerCase().contains("mobile")) {
+          ModelAndView mv = new ModelAndView(
+                    "redirect:/exemplos/ex-sites-separados/desktop");
+            return mv;
+        }
+        ModelAndView mv = new ModelAndView("ex-sites-separados-mobile");
+        mv.addObject("userAgent", userAgent);
+        return mv;
+    }
+    
+    @GetMapping("/ex-headers")
+    public ModelAndView exHeaders(@RequestHeader Map<String, String> mapHeaders,
+            @RequestParam(defaultValue = "list") String tipoView) {
+        String template = "ex-headers-list";
+        if ("table".equals(tipoView)) {
+            template = "ex-headers-table";
+        }
+        
+        ModelAndView mv = new ModelAndView(template);
+        mv.addObject("headers", mapHeaders);
+        return mv;
+    }
 
 }
+ 
