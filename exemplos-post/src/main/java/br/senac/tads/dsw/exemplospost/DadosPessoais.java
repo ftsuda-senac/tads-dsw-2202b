@@ -1,17 +1,31 @@
 package br.senac.tads.dsw.exemplospost;
 
 import java.time.LocalDate;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class DadosPessoais {
-    
+
+    @Size(max = 50)
+    @NotBlank(message = "Preencha seu nome seu animal")
     private String nome;
-    
+
+    @PastOrPresent
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) // ISO-8601
     private LocalDate dataNascimento;
-    
+
+    @Email
+    @Size(max = 50)
+    @NotBlank
     private String email;
-    
+
+    @Size(max = 16)
     private String telefone;
-    
+
+    @NotBlank
     private String senha;
 
     public String getNome() {
@@ -53,5 +67,5 @@ public class DadosPessoais {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    
+
 }

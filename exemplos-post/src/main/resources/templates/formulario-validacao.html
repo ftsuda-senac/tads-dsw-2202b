@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Exemplo POST</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .erro {
+                color: red;
+                margin-top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <h1>Dados pessoais com Validação</h1>
+            <form method="post" action="receber-dados-validacao" novalidate th:object="${dados}">
+                <div>
+                    <label for="txtNome">Nome</label>
+                    <input type="text" name="nome" id="txtNome" maxlength="50" required th:field="*{nome}" />
+                    <p class="erro" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">Mensagem de erro</p>
+                </div>
+                <div>
+                    <label for="txtDataNascimento">Data nascimento</label>
+                    <input type="date" name="dataNascimento" id="txtDataNascimento" th:field="*{dataNascimento}" />
+                    <p class="erro" th:if="${#fields.hasErrors('dataNascimento')}" th:errors="*{dataNascimento}">Mensagem de erro</p>
+                </div>
+                <div>
+                    <label for="txtEmail">E-mail</label>
+                    <input type="email" name="email" id="txtEmail" maxlength="50" required th:field="*{email}" />
+                    <p class="erro" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Mensagem de erro</p>
+                </div>
+                <div>
+                    <label for="txtTelefone">Telefone</label>
+                    <input type="text" name="telefone" id="txtTelefone" maxlength="16" th:field="*{telefone}" />
+                    <p class="erro" th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}">Mensagem de erro</p>
+                </div>
+                <div>
+                    <label for="txtSenha">Senha</label>
+                    <input type="password" name="senha" id="txtSenha" required th:field="*{senha}" />
+                    <p class="erro" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}">Mensagem de erro</p>
+                </div>
+                <button type="submit">Enviar dados</button>
+            </form>
+
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Setar data de nascimento máxima (CORRIGIDO)
+                document.getElementById('txtDataNascimento').max = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60 * 1000).toISOString().substring(0, 10);
+            });
+        </script>
+    </body>
+</html>

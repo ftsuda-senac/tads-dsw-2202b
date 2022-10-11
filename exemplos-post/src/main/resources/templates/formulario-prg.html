@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Exemplo POST</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+            <h1>Dados pessoais com Post-Redirect-Get</h1>
+            <form method="post" action="receber-dados-prg">
+                <div>
+                    <label for="txtNome">Nome</label>
+                    <input type="text" name="nome" id="txtNome" />
+                </div>
+                <div>
+                    <label for="txtDataNascimento">Data nascimento</label>
+                    <input type="date" name="dataNascimento" id="txtDataNascimento" />
+                </div>
+                <div>
+                    <label for="txtEmail">E-mail</label>
+                    <input type="email" name="email" id="txtEmail" />
+                </div>
+                <div>
+                    <label for="txtTelefone">Telefone</label>
+                    <input type="text" name="telefone" id="txtTelefone" />
+                </div>
+                <div>
+                    <label for="txtSenha">Senha</label>
+                    <input type="password" name="senha" id="txtSenha" />
+                </div>
+                <button type="submit">Enviar dados</button>
+            </form>
+
+        </div>
+    </body>
+</html>
