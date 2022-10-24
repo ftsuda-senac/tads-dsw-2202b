@@ -2,24 +2,31 @@ package br.senac.tads.dsw.exemplosspring.produto;
 
 import java.io.Serializable;
 import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-/**
- *
- * @author fernando.tsuda
- */
+@Entity
+// @Table(name = "categoria_tabela_bd")
 public class Categoria implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotEmpty
     @Size(min = 1, max = 100)
     private String nome;
 
+    @ManyToMany(mappedBy = "categorias")
     private Set<Produto> produtos;
 
     public Categoria() {
