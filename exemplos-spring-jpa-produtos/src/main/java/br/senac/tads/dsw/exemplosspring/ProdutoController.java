@@ -32,6 +32,7 @@ import br.senac.tads.dsw.exemplosspring.produto.ImagemProduto;
 import br.senac.tads.dsw.exemplosspring.produto.Produto;
 import br.senac.tads.dsw.exemplosspring.produto.ProdutoRepository;
 import java.util.Optional;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -64,6 +65,30 @@ public class ProdutoController {
             // Lista todos os produtos usando paginacao
             Page<Produto> pageResultados = produtoRepository.findAll(PageRequest.of(offset/qtd, qtd));
             resultados = pageResultados.getContent();
+        }
+        return new ModelAndView("produtos/lista").addObject("produtos", resultados);
+    }
+    
+    @GetMapping("/query-by-example")
+    public ModelAndView listarQueryByExample(
+            @RequestParam(name = "idsCat", required = false) List<Integer> idsCat) {
+        List<Produto> resultados;
+        if (idsCat != null && !idsCat.isEmpty()) {
+            // Busca pelos IDs das categorias informadas
+            Set<Categoria> categorias = new HashSet<>();
+            Produto prod = new Produto();
+            for (Integer idCat : idsCat) {
+                Categoria cat = new Categoria();
+                cat.setId(idCat);
+                cat.setProdutos(new HashSet<>(Arrays.asList(prod)));
+                categorias.add(cat);
+            }
+            prod.setCategorias(categorias);
+            Example<Produto> exProd = Example.of(prod);
+            resultados = produtoRepository.findAll(exProd);
+        } else {
+            // Lista todos os produtos usando paginacao
+            resultados = produtoRepository.findAll();
         }
         return new ModelAndView("produtos/lista").addObject("produtos", resultados);
     }
