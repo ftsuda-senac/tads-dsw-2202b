@@ -31,6 +31,9 @@ import br.senac.tads.dsw.exemplosspring.produto.CategoriaRepository;
 import br.senac.tads.dsw.exemplosspring.produto.ImagemProduto;
 import br.senac.tads.dsw.exemplosspring.produto.Produto;
 import br.senac.tads.dsw.exemplosspring.produto.ProdutoRepository;
+import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 /**
  *
@@ -47,17 +50,28 @@ public class ProdutoController {
     private CategoriaRepository categoriaRepository;
 
     @GetMapping
-    public ModelAndView listar(@RequestParam(name = "offset", defaultValue = "0") int offset,
+    public ModelAndView listar(
+            @RequestParam(name = "offset", defaultValue = "0") int offset,
             @RequestParam(name = "qtd", defaultValue = "500") int qtd,
             @RequestParam(name = "idsCat", required = false) List<Integer> idsCat) {
         List<Produto> resultados;
         if (idsCat != null && !idsCat.isEmpty()) {
             // Busca pelos IDs das categorias informadas
-            resultados = produtoRepository.findByCategoria(idsCat, offset, qtd);
+            //Page<Produto> pageResultados = produtoRepository.findDistinctByCategorias_IdIn(idsCat, PageRequest.of(offset/qtd, qtd));
+            //resultados = pageResultados.getContent();
+            resultados = produtoRepository.findByXpto(idsCat);
         } else {
             // Lista todos os produtos usando paginacao
-            resultados = produtoRepository.findAll(offset, qtd);
+            Page<Produto> pageResultados = produtoRepository.findAll(PageRequest.of(offset/qtd, qtd));
+            resultados = pageResultados.getContent();
         }
+        return new ModelAndView("produtos/lista").addObject("produtos", resultados);
+    }
+    
+    @GetMapping("/teste")
+    public ModelAndView listarTeste(
+            @RequestParam(name = "param", required = false) String param) {
+        List<Produto> resultados = produtoRepository.findByNomeContainingIgnoreCase(param);
         return new ModelAndView("produtos/lista").addObject("produtos", resultados);
     }
 
@@ -69,7 +83,11 @@ public class ProdutoController {
     @GetMapping("/{id}/editar")
     public ModelAndView editar(@PathVariable("id") long id) {
 
-        Produto prod = produtoRepository.findById(id);
+        Optional<Produto> optProd = produtoRepository.findById(id);
+        if (!optProd.isPresent()) {
+            return new ModelAndView("redirect:/produtos");
+        }
+        Produto prod = optProd.get();
         if (prod.getCategorias() != null && !prod.getCategorias().isEmpty()) {
             Set<Integer> idsCategorias = new HashSet<>();
             for (Categoria cat : prod.getCategorias()) {
@@ -90,9 +108,12 @@ public class ProdutoController {
         if (produto.getIdsCategorias() != null && !produto.getIdsCategorias().isEmpty()) {
             Set<Categoria> categoriasSelecionadas = new HashSet<>();
             for (Integer idCat : produto.getIdsCategorias()) {
-                Categoria cat = categoriaRepository.findById(idCat);
-                categoriasSelecionadas.add(cat);
-                cat.setProdutos(new HashSet<>(Arrays.asList(produto)));
+                Optional<Categoria> optCat = categoriaRepository.findById(idCat);
+                if (optCat.isPresent()) {
+                    Categoria cat = optCat.get();
+                    categoriasSelecionadas.add(cat);
+                    cat.setProdutos(new HashSet<>(Arrays.asList(produto)));
+                }
             }
             produto.setCategorias(categoriasSelecionadas);
         }
