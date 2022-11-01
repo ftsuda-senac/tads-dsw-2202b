@@ -8,6 +8,9 @@
             <div class="row">
                 <div class="col-md-4 offset-md-4 col-sm-6 offset-sm-3">
                     <h1>Login customizado</h1>
+                    <div th:if="${param.logout != null}">
+                        <h1>Logout realizado
+                    </div>
                     <form th:action="@{/login}" method="post">
                         <div class="row mb-3">
                             <label for="txtUsername" class="col-sm-2 col-form-label">Username</label>
