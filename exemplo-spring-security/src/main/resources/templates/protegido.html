@@ -10,8 +10,8 @@
             <hr />
             <div>
                 <h2>Informações do usuário</h2>
-                <p>Nome completo: <strong></strong></p>
-                <p>Hash senha: <code></code></p>
+                <p>Nome completo: <strong sec:authentication="principal.nomeCompleto"></strong></p>
+                <p>Hash senha: <code sec:authentication="principal.hashSenha"></code></p>
             </div>
             <a th:href="@{/home}">Voltar</a>
         </div>

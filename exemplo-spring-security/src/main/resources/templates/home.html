@@ -16,9 +16,9 @@
             </div>
             <div>
                 <ul>
-                    <li><a th:href="@{/protegido/peao}">Tela PEAO</a></li>
-                    <li><a th:href="@{/protegido/fodon}">Tela FODON</a></li>
-                    <li><a th:href="@{/protegido/god}">Tela GOD</a></li>
+                    <li sec:authorize="hasAuthority('ROLE_PEAO')"><a th:href="@{/protegido/peao}">Tela PEAO</a></li>
+                    <li sec:authorize="hasAuthority('ROLE_FODON')"><a th:href="@{/protegido/fodon}">Tela FODON</a></li>
+                    <li sec:authorize="hasAuthority('ROLE_GOD')"><a th:href="@{/protegido/god}">Tela GOD</a></li>
                 </ul>
                 <p>
                     <a th:href="@{/logout}">Sair</a>
