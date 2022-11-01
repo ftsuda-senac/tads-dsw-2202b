@@ -9,6 +9,12 @@
             <div th:if="${usuario != null}">
                 <h2>Nome completo: <span th:text="${usuario.nomeCompleto}"></span></h2>
                 <p>Hash da senha: <code th:text="${usuario.hashSenha}"></code></p>
+                <p>Papeis: <span class="badge rounded-pill text-bg-info mx-1" th:each="papel : ${usuario.papeis}" th:text="${papel.nome}"></span></p>
+            </div>
+            <div th:unless="${usuario != null}">
+                <h2>Usuário não logado no sistema</h2>
+            </div>
+            <div>
                 <ul>
                     <li><a th:href="@{/protegido/peao}">Tela PEAO</a></li>
                     <li><a th:href="@{/protegido/fodon}">Tela FODON</a></li>
@@ -17,9 +23,6 @@
                 <p>
                     <a th:href="@{/logout}">Sair</a>
                 </p>
-            </div>
-            <div th:unless="${usuario != null}">
-                <h2>Usuário não logado no sistema</h2>
             </div>
         </div>
     </body>
