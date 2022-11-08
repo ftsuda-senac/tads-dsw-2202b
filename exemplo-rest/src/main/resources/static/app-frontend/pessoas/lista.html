@@ -230,6 +230,27 @@
                 // 1) CARREGAR DADOS
                 // 2) MOSTRAR DADOS NA TABELA
                 // 3) ATUALIZAR BOTÕES DE PAGINAÇÃO
+                
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', 'http://localhost:8080/rest/pessoas?page=' + pagina + '&qtde=' + qtde, true);
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        
+                        // Desserialização do JSON para objeto JS
+                        const dados = JSON.parse(xhr.responseText);
+                        
+                        // Atualizar tabelas com os dados
+                        const containerTbody = document.getElementById('dadosTabela');
+                        containerTbody.innerHTML = ''; // limpar linhas da tabela
+                        for (const item of dados.content) {
+                            containerTbody.insertAdjacentHTML('beforeend', montarLinhaTabela(item));
+                        }
+                        
+                        // Atualizar botões de paginação
+                        ajustarPaginacao(dados);
+                    }
+                }
+                xhr.send();
             }
 
             // ready- Função que chama a function definida quando ocorre o evento

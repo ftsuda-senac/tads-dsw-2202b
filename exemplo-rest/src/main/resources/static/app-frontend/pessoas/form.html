@@ -304,9 +304,54 @@
 
                 // TODO: IMPLEMENTAR LÓGICA PARA:
                 // 1) PEGAR DADOS PREENCHIDOS DO FORMULARIO
-                // 2) MONTAR OBJETO JSON
+                // 2) MONTAR OBJETO JAVASCRIPT -> SERIALIZAR PARA JSON
                 // 3) ENVIAR USANDO AJAX (POST OU PUT)
-
+                
+                // Percorre checkboxes para identificar interesses selecionados
+                const interesses = document.querySelectorAll('[name="interessesIds"]');
+                const interessesIdsArr = [];
+                for (const elCheckbox of interesses) {
+                    if (elCheckbox.checked) {
+                        interessesIdsArr.push(+elCheckbox.value); // O "+" converte string para número quando possivel
+                    }
+                }
+                
+                // Monta a estrutura do JSON
+                const dadosParaSalvar = {
+                    id: idPessoa,
+                    nome: form.nome.value,
+                    apelido: form.apelido.value,
+                    descricao: form.descricao.value,
+                    dataNascimento: form.dataNascimento.value,
+                    email: form.email.value,
+                    telefone: form.telefone.value,
+                    senha: form.senha?.value, // O "?" indica que a senha é opcional
+                    senhaRepetida: form.senhaRepetida?.value,
+                    numero: +form.numero.value,
+                    altura: +form.altura.value,
+                    peso: +form.peso.value,
+                    genero: +form.genero.value,
+                    interessesIds: interessesIdsArr
+                };
+                console.log('JSON montado: ' + JSON.stringify(dadosParaSalvar));
+                
+                const xhr = new XMLHttpRequest();
+                if (idPessoa) {
+                    xhr.open('PUT', 'http://localhost:8080/rest/pessoas/' + idPessoa, true);
+                } else {
+                    xhr.open('POST', 'http://localhost:8080/rest/pessoas', true);
+                }
+                xhr.setRequestHeader('Content-type', 'application/json');
+                xhr.setRequestHeader('Accept', 'application/json');
+                
+                xhr.onload = function() {
+                    if (xhr.status === 200 || xhr.status === 201) {
+                        alert('SUCESSO\r\n' + xhr.status + '\r\n' + xhr.getResponseHeader('Location'));
+                        history.go(-1);
+                    }
+                };
+                xhr.send(JSON.stringify(dadosParaSalvar));
+ 
             }
 
             // ready- Função que chama a function definida quando ocorre o evento
