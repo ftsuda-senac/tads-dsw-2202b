@@ -2,6 +2,8 @@ package br.senac.tads.dsw.exemplorest.controller;
 
 import br.senac.tads.dsw.exemplorest.dominio.DadosPessoais;
 import br.senac.tads.dsw.exemplorest.dominio.DadosPessoaisService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,11 +28,17 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/rest/pessoas")
+// @CrossOrigin(origins = "http://127.0.0.1:8080")
+// @CrossOrigin(origins = "*")
+
+// Tags do Springdoc/Swagger: exemplo em https://github.com/springdoc/springdoc-openapi-demos/blob/master/springdoc-openapi-spring-boot-2-webmvc/src/main/java/org/springdoc/demo/app2/api/StoreApi.java
+@Tag(name = "dados-pessoais", description = "APIs para dados pessoais")
 public class DadosPessoaisRestController {
     
     @Autowired
     private DadosPessoaisService service;
     
+    @Operation(summary = "Paginação dos dados", description = "Descrição da paginação dos dados", tags = { "dados-pessoais" })
     @GetMapping
     public Page<DadosPessoais> listar(
             @RequestParam(name = "page", defaultValue = "0") int page,
